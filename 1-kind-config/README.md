@@ -94,7 +94,7 @@ kubectl get nodes --show-labels
 
 **說明**：這些步驟使用 Kind 工具根據配置文件創建 Kubernetes 集群，並檢查集群信息和節點狀態。
 
-![Untitled](./img/img.jpg)
+![Untitled](../img/img.jpg)
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/81c758a8-650d-4bbb-899e-ece50bd38dd6/44d804d7-75b4-4949-8131-af6ed04efd4c/Untitled.png)
 
