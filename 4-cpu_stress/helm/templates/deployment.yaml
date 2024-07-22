@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.Appname }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: {{ .Values.Appname }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.Appname }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
+      containers:
+      - name: {{ .Values.Appname }}
+        image: "{{ .Values.Image }}:{{ .Values.Tag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        {{ if .Values.args }}
+        args:
+        {{- with .Values.args }}
+        {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{ end }}
+        resources:
+        {{- with .Values.resources }}
+        {{- toYaml . | nindent 10 }}
+        {{- end }}

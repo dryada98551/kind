@@ -75,24 +75,8 @@ newgrp docker
 
 ### 創建 Kind 配置文件
 
-創建一個名為 `kind-config.yaml` 的文件，內容如下：
+創建一個名為 `kind-config.yaml` 的文件
 
-```yaml
-
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-  - role: control-plane
-  - role: control-plane
-  - role: control-plane
-  - role: worker
-    extraPortMappings:
-      - containerPort: 32090
-        hostPort: 32090
-        protocol: TCP
-  - role: worker
-
-```
 
 **說明**：這個配置文件定義了 Kind 集群的結構，包括 3 個控制平面節點和 2 個工作節點。
 

@@ -1,0 +1,59 @@
+# helm upgrade --install myapp -f values.yaml .
+# helm delete myapp
+
+imagePullSecrets: my-dockerhub-secret
+imagePullPolicy: IfNotPresent
+
+Appname: myapp
+
+# image
+# Image: dryada98551/my-stress
+# Tag: latest
+Image: dryada98551/cpu_stress_image
+Tag: latest
+
+# args:
+#   - "--cpu"
+#   - "1"
+#   - "--timeout"
+#   - "600s"
+
+# 開幾個Pod
+# replicas: 3
+revisionHistoryLimit: 3
+
+# pod資源設定
+resources:
+  limits:
+    memory: "1024Mi"
+    cpu: "200m"
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+
+# 水平擴展
+Autoscaler:
+  minReplicas: 3
+  maxReplicas: 10
+  cpu:
+    averageValue: 100
+  memory:
+    averageValue: 100
+  scaleDown:
+    stabilizationWindowSeconds: 300
+    rules:
+      - type: Percent
+        value: 50
+        periodSeconds: 15
+      - type: Pods
+        value: 1
+        periodSeconds: 15
+  scaleUp:
+    stabilizationWindowSeconds: 0
+    rules:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+      - type: Pods
+        value: 2
+        periodSeconds: 15
