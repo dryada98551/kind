@@ -96,8 +96,6 @@ kubectl get nodes --show-labels
 
 ![Untitled](../img/img001.jpg)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/81c758a8-650d-4bbb-899e-ece50bd38dd6/44d804d7-75b4-4949-8131-af6ed04efd4c/Untitled.png)
-
 ### 檢查容器內狀態
 
 在 Kind 工作節點內部檢查 `kubelet` 日誌：
