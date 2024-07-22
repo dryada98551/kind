@@ -58,6 +58,10 @@ kubectl -n monitoring get pods
 kubectl -n monitoring get svc
 
 ```
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/81c758a8-650d-4bbb-899e-ece50bd38dd6/f2001ded-3992-4c88-aa73-2ab0e17da794/Untitled.png)
+![Untitled](../img/img003.jpg)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/81c758a8-650d-4bbb-899e-ece50bd38dd6/0d112656-0225-45a9-a21c-dcfd02d0eb2c/Untitled.png)
+![Untitled](../img/img004.jpg)
+
+### 6. GUI
+
+![Untitled](../img/img005.jpg)
