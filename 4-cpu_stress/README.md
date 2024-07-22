@@ -30,6 +30,15 @@ helm upgrade --install myapp -f values.yaml .
 使用以下命令來檢查 HPA 狀態：
 
 ```bash
+kubectl get pod
 kubectl get hpa
 ```
 這會顯示當前集群中所有 HPA 的狀態，包括目標和當前副本數
+
+
+![Untitled](../img/img013.jpg)
+![Untitled](../img/img014.jpg)
+![Untitled](../img/img015.jpg)
+
+### Grafana Dashboard
+![Untitled](../img/img016.jpg)
