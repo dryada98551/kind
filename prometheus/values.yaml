@@ -1,0 +1,72 @@
+# 禁用 Grafana
+grafana:
+  enabled: false
+
+# 啟用 Prometheus
+prometheus:
+  service:
+    type: NodePort
+    nodePort: 32090
+  prometheusSpec:
+    nodeSelector:
+      disktype: ssd  # 與節點標籤匹配
+    serviceMonitorSelectorNilUsesHelmValues: false
+    # ingress:
+    #   enabled: true
+    #   annotations:
+    #     nginx.ingress.kubernetes.io/rewrite-target: /
+    #   hosts:
+    #     - prometheus.local
+    #   paths:
+    #     - /
+    #   tls: []
+
+# 啟用 Node Exporter
+nodeExporter:
+  enabled: true
+
+# 啟用 Kube-State-Metrics
+kubeStateMetrics:
+  enabled: true
+
+# 配置 Prometheus 抓取配置
+serverFiles:
+  prometheus.yml:
+    global:
+      scrape_interval: 15s
+    scrape_configs:
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+      - job_name: 'node-exporter'
+        kubernetes_sd_configs:
+        - role: pod
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          action: keep
+          regex: true
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          target_label: __address__
+          regex: (.+):(?:\d+);(\d+)
+          replacement: $1:$2
+      - job_name: 'kube-state-metrics'
+        kubernetes_sd_configs:
+        - role: pod
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          action: keep
+          regex: true
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          target_label: __address__
+          regex: (.+):(?:\d+);(\d+)
+          replacement: $1:$2
