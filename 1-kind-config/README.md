@@ -64,7 +64,6 @@ sudo snap install kubectl --classic
 
 ```bash
 sudo groupadd docker
-USER=jeffhe
 sudo usermod -aG docker ${USER}
 sudo chown -fR ${USER} ~/.kube
 newgrp docker
@@ -76,7 +75,6 @@ newgrp docker
 ### 創建 Kind 配置文件
 
 創建一個名為 `kind-config.yaml` 的文件
-
 
 **說明**：這個配置文件定義了 Kind 集群的結構，包括 3 個控制平面節點和 2 個工作節點。
 
@@ -95,6 +93,8 @@ kubectl get nodes --show-labels
 ```
 
 **說明**：這些步驟使用 Kind 工具根據配置文件創建 Kubernetes 集群，並檢查集群信息和節點狀態。
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/81c758a8-650d-4bbb-899e-ece50bd38dd6/44d804d7-75b4-4949-8131-af6ed04efd4c/Untitled.png)
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/81c758a8-650d-4bbb-899e-ece50bd38dd6/44d804d7-75b4-4949-8131-af6ed04efd4c/Untitled.png)
 
