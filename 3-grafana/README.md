@@ -22,6 +22,9 @@ docker-compose up -d
 
 打開你的瀏覽器，訪問 `http://localhost:3000`。默認的登錄憑證是：
 
+
+![Untitled](../img/img006.jpg)
+
 - 用戶名：`admin`
 - 密碼：`admin`
 
@@ -37,6 +40,10 @@ docker-compose up -d
 6. 滾動到頁面底部，點擊 “Save & Test” 按鈕，確保連接成功。
 
 ### 5.1 效能監控儀表板(1): 呈現node的效能監控數據
+
+![Untitled](../img/img007.jpg)
+![Untitled](../img/img008.jpg)
+![Untitled](../img/img009.jpg)
 
 ### 面板 1: CPU 使用度
 
