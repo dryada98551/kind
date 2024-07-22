@@ -370,10 +370,5 @@ docker-compose up -d
 
 ### 5.3 觀察CPU Throttling
 
-#### 觀察CPU Throttling
+可觀察Pods CPU Usage (5m avg)中每個pod的CPU使用比例，對應每個服務設定的limits requests來判定使否有出現CPU Throttling。
 
-請說明如何透過建立的監控儀表板觀察CPU Throttling現象。
-
-#### 觀察CPU Throttling
-
-請說明如何透過建立的監控儀表板觀察CPU Throttling現象。
