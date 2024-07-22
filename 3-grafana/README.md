@@ -139,3 +139,262 @@ docker-compose up -d
 - **說明:** 此面板顯示節點的網路傳輸速率，反映了網路流量的傳輸情況。
 
 這些面板共同提供了一個全面的節點效能監控儀表板，幫助你監控和分析節點的CPU、記憶體、磁碟和網路資源的使用情況。
+
+
+### 5.2 效能監控儀表板(2): 顯示kind叢集的效能監控數據
+
+![Untitled](../img/img008.jpg)
+![Untitled](../img/img009.jpg)
+![Untitled](../img/img010.jpg)
+![Untitled](../img/img011.jpg)
+![Untitled](../img/img012.jpg)
+
+### 面板 1: Cluster Memory Usage
+
+- **名稱:** Cluster Memory Usage
+- **查詢:**
+    
+    ```
+    sum(container_memory_working_set_bytes{node=~"^$Node$"}) / sum(machine_memory_bytes{node=~"^$Node$"}) * 100
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的內存使用百分比，表示當前被使用的內存量。
+
+### 面板 2: Used Memory
+
+- **名稱:** Used Memory
+- **查詢:**
+    
+    ```
+    container_memory_usage_bytes
+    
+    ```
+    
+- **說明:** 此面板顯示當前容器使用的內存量。
+
+### 面板 3: Total Memory
+
+- **名稱:** Total Memory
+- **查詢:**
+    
+    ```
+    machine_memory_bytes{}
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的總內存量。
+
+### 面板 4: Cluster CPU Usage (5m avg)
+
+- **名稱:** Cluster CPU Usage (5m avg)
+- **查詢:**
+    
+    ```
+    sum(rate(container_cpu_usage_seconds_total{node=~"^$Node$"}[5m])) / sum(machine_cpu_cores{node=~"^$Node$"}) * 100
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的CPU使用百分比，使用5分鐘的平均值來表示。
+
+### 面板 5: Used CPU
+
+- **名稱:** Used CPU
+- **查詢:**
+    
+    ```
+    sum(rate(container_cpu_usage_seconds_total{node=~"^$Node$"}[5m]))
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的已使用CPU秒數，使用5分鐘的平均值來表示。
+
+
+### 面板 6: Total CPU Cores
+
+- **名稱:** Total CPU Cores
+- **查詢:**
+    
+    ```
+    machine_cpu_physical_cores
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的物理CPU核心總數。
+
+### 面板 7: Cluster Filesystem Usage
+
+- **名稱:** Cluster Filesystem Usage
+- **查詢:**
+    
+    ```
+    ((sum(node_filesystem_size_bytes{node=~"^$Node$"}) - sum(node_filesystem_free_bytes{node=~"^$Node$"})))/ sum(node_filesystem_size_bytes{node=~"^$Node$"}) * 100
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的文件系統使用百分比，表示當前被使用的存儲空間量。
+
+### 面板 8: Used Filesystem Space
+
+- **名稱:** Used Filesystem Space
+- **查詢:**
+    
+    ```
+    (sum(node_filesystem_size_bytes{node=~"^$Node$"}) - sum(node_filesystem_free_bytes{node=~"^$Node$"}))
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的已使用文件系統空間。
+
+### 面板 9: Total Filesystem Space
+
+- **名稱:** Total Filesystem Space
+- **查詢:**
+    
+    ```
+    sum(node_filesystem_size_bytes{node=~"^$Node$"})
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的總文件系統空間。
+
+### 面板 10: Network I/O Pressure
+
+- **名稱:** Network I/O Pressure
+- **查詢:**
+    
+    ```
+    sum(rate(container_network_receive_bytes_total{node=~"^$Node$"}[5m]))
+    sum(rate(container_network_transmit_bytes_total{node=~"^$Node$"}[5m]))
+    
+    ```
+    
+- **說明:** 此面板顯示集群中所有節點的網絡接收和發送流量速率，使用5分鐘的平均值來表示。
+
+### 面板 11: CPU Use by Namespace
+
+- **名稱:** CPU Use by Namespace
+- **查詢:**
+    
+    ```
+    sum(rate(container_cpu_usage_seconds_total{image!="",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (namespace)
+    
+    ```
+    
+- **說明:** 此面板顯示每個命名空間的CPU使用情況，使用5分鐘的平均值來表示。
+
+### 面板 12: Memory Use by Namespace
+
+- **名稱:** Memory Use by Namespace
+- **查詢:**
+    
+    ```
+    sum(container_memory_working_set_bytes{image!="",node=~"^$Node$",namespace=~"$Namespace"}) by (namespace)
+    
+    ```
+    
+- **說明:** 此面板顯示每個命名空間的內存使用情況。
+
+### 面板 13: Pods CPU Usage (5m avg)
+
+- **名稱:** Pods CPU Usage (5m avg)
+- **查詢:**
+    
+    ```
+    sum(rate(container_cpu_usage_seconds_total{image!="",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (pod)
+    
+    ```
+    
+- **說明:** 此面板顯示每個Pod的CPU使用情況，使用5分鐘的平均值來表示。
+
+### 面板 14: Containers CPU Usage (5m avg)
+
+- **名稱:** Containers CPU Usage (5m avg)
+- **查詢:**
+    
+    ```
+    sum(rate(container_cpu_usage_seconds_total{image!="",name=~"^k8s_.*",container_name!="POD",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (container_name, pod)
+    
+    ```
+    
+- **說明:** 此面板顯示docker層(Kind Node)每個容器的CPU使用情況，使用5分鐘的平均值來表示。
+
+### 面板 15: All Processes CPU Usage (5m avg)
+
+- **名稱:** All Processes CPU Usage (5m avg)
+- **查詢:**
+    
+    ```
+    sum(rate(container_cpu_usage_seconds_total{id!="/",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (id)
+    
+    ```
+    
+- **說明:** 此面板顯示所有進程的CPU使用情況，使用5分鐘的平均值來表示。
+
+### 面板 16: Pods Memory Usage
+
+- **名稱:** Pods Memory Usage
+- **查詢:**
+    
+    ```
+    sum(container_memory_working_set_bytes{image!="",node=~"^$Node$",namespace=~"$Namespace"}) by (pod)
+    
+    ```
+    
+- **說明:** 此面板顯示每個Pod的內存使用情況。
+
+### 面板 17: Containers Memory Usage
+
+- **名稱:** Containers Memory Usage
+- **查詢:**
+    
+    ```
+    sum(container_memory_working_set_bytes{image!="",name=~"^k8s_.*",container_name!="POD",node=~"^$Node$",namespace=~"$Namespace"}) by (container_name, pod)
+    sum(container_memory_working_set_bytes{image!="",name!~"^k8s_.*",node=~"^$Node$",namespace=~"$Namespace"}) by (node, name, image)
+    
+    ```
+    
+- **說明:** 此面板顯示docker層(Kind Node)每個容器的內存使用情況。
+
+
+### 面板 18: All Processes Memory Usage
+
+- **名稱:** All Processes Memory Usage
+- **查詢:**
+    
+    ```
+    sum(container_memory_working_set_bytes{id!="/",node=~"^$Node$",namespace=~"$Namespace"}) by (id)
+    
+    ```
+    
+- **說明:** 此面板顯示所有進程的內存使用情況。
+
+### 面板 19: Pods Network I/O (5m avg)
+
+- **名稱:** Pods Network I/O (5m avg)
+- **查詢:**
+    
+    ```
+    sum(rate(container_network_receive_bytes_total{image!="",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (pod)
+    sum(rate(container_network_transmit_bytes_total{image!="",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (pod)
+    
+    ```
+    
+- **說明:** 此面板顯示每個Pod的網絡接收和發送流量速率，使用5分鐘的平均值來表示。
+
+### 面板 20: Containers Network I/O (5m avg)
+
+- **名稱:** Containers Network I/O (5m avg)
+- **查詢:**
+    
+    ```
+    sum(rate(container_network_receive_bytes_total{image!="",name=~"^k8s_.*",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (container_name, pod)
+    sum(rate(container_network_transmit_bytes_total{image!="",name=~"^k8s_.*",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (container_name, pod)
+    sum(rate(container_network_receive_bytes_total{image!="",name!~"^k8s_.*",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (node, name, image)
+    sum(rate(container_network_transmit_bytes_total{image!="",name!~"^k8s_.*",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (node, name, image)
+    sum(rate(container_network_transmit_bytes_total{rkt_container_name!="",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (node, rkt_container_name)
+    sum(rate(container_network_transmit_bytes_total{rkt_container_name!="",node=~"^$Node$",namespace=~"$Namespace"}[5m])) by (node, rkt_container_name)
+    
+    ```
+    
+- **說明:** 此面板顯示docker層(Kind Node)每個容器的網絡接收和發送流量速率，使用5分鐘的平均值來表示。
