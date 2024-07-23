@@ -108,18 +108,6 @@ journalctl -u kubelet -f
 
 通過以上步驟，你將成功在 Ubuntu 22.04 虛擬機上創建一個包含 3 個控制平面節點和 2 個工作節點的多節點 Kind 集群，並且不需要使用 `sudo` 來運行 `kind` 和 `docker` 命令。如果有任何問題或需要進一步的幫助，請隨時告訴我。
 
-### **創建 Docker Hub secret**
-
-**創建 Docker Hub secret**：
-
-首先，您需要創建一個 Kubernetes secret 來存儲您的 Docker Hub 憑證。您可以使用 `kubectl create secret docker-registry` 命令來創建它：
-
-```bash
-kubectl create secret docker-registry my-dockerhub-secret \
-  --docker-username=dryada98551 \
-  --docker-password=passwd
-```
-
 ### 安装 Metrics Server
 
 安裝Metrics Server
