@@ -44,7 +44,3 @@ Prometheus將收集Node Exporter和Kube-State-Metrics的效能數據。
 
 在kind叢集中部署一個容器應用程式，並建立一個HPA (Horizontal Pod Autoscaler)物件，以CPU使用率達到50%為條件，最多擴充到10個Pod。
 
-### 提交方式
-
-將以上操作的方法、使用到的配置檔(yaml, helm等)、說明檔（以Markdown格式呈現圖、內容）上傳到GitHub，並於下週二（7/23）早上9:00前將GitHub網址提交。
-
